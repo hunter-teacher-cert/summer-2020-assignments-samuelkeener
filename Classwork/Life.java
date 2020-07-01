@@ -4,17 +4,27 @@ import java.util.*;;
 public class Life {
 	public static void main(String[] args) {
 		System.out.println("Hello");
-		char[][] board = createNewBoard(25, 25);
+		char[][] board = createNewBoard(250, 250);
 
-		for (int x = 0; x < 100; x++) {
+		for (int x = 0; x < 1000; x++) {
+			drawBoard(board);
 			oneGeneration(board);
-			printBoard(board);
 		}
 
 	} // end main
 
 	// Create a new 2-d array, fill it with ' ' representing that the board is
 	// empty.
+	public static void drawBoard(char[][] board) {
+		int[][] intboard = new int[board.length][board[0].length];
+		for (int r = 0; r < intboard.length; r++) {
+			for (int c = 0; c < intboard[0].length; c++) {
+				if (board[r][c] == 'O')
+					intboard[r][c] = 255;
+			}
+		}
+		ImageTest.drawImage(intboard);
+	}
 
 	public static char[][] createNewBoard(int rows, int cols) {
 		char[][] board = new char[rows][cols];
