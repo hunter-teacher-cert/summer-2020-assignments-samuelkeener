@@ -30,10 +30,10 @@ public class Life {
 		char[][] board = new char[rows][cols];
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols; c++) {
-				if (Math.random() < .5)
-					board[r][c] = ' ';
-				else
+				if (Math.random() > .8 && r > 75 && r < 175 && c > 75 && c < 175)
 					board[r][c] = 'O';
+				else 
+					board[r][c] = ' ';
 			}
 		}
 		return board;
