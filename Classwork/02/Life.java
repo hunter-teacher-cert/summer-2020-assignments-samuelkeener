@@ -1,5 +1,6 @@
 import java.io.*;
-import java.util.*;;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Life {
 	public static void main(String[] args) {
@@ -37,6 +38,18 @@ public class Life {
 		}
 		return board;
 	}
+
+	/* Animateboard method copied from Topher 
+	public static void animateBoard(char[][] board) {
+		System.out.print("[0;0H\n");
+		for (int row = 0; row < board.length; row++) {
+			for (int col = 0; col < board[row].length; col++) {
+				System.out.print(board[row][col]);
+			}
+			System.out.println();
+		}
+		delay(1000);
+	}*/
 
 	// Set the cell (r,c) to value
 	public static void setCell(char[][] board, int r, int c, char val) {
