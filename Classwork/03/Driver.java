@@ -30,4 +30,4 @@ public class Driver {
 		System.out.println(endTime);
 
 	} // end main
-} // end class
+} // end Class

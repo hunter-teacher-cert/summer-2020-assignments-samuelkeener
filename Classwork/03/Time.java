@@ -113,4 +113,4 @@ public class Time {
 	    }
 	    return sum;
 	}
-} // end class
+} // end Class
