@@ -14,10 +14,12 @@ public class SuperArray {
 	}
 
 	public void add(int value) {
+		// is the array full?
 		if (data.length == numberElements) {
 			grow();
 			data[data.length - 1] = value;
 		} else {
+			// put new value in proper index
 			data[numberElements] = value;
 		}
 		numberElements++;
@@ -44,9 +46,9 @@ public class SuperArray {
 		for (int i = index; i < data.length - 1; i++) {
 			data[i] = data[i + 1];
 		}
-		//change last index to 0
-		data[data.length-1] = 0;
-		//reduce number of elements
+		// change last index to 0
+		data[data.length - 1] = 0;
+		// reduce number of elements
 		numberElements--;
 	}
 
@@ -55,12 +57,7 @@ public class SuperArray {
 	}
 
 	public boolean isEmpty() {
-		boolean flag = true;
-		for (int i = 0; i < data.length; i++) {
-			if (data[i] != 0)
-				flag = false;
-		}
-		return flag;
+		return numberElements == 0;
 	}
 
 	public String toString() {
@@ -73,10 +70,13 @@ public class SuperArray {
 	}
 
 	public void grow() {
+		// creates temp array
 		int[] temp = new int[data.length + 1];
+		// copies all values from data into temp
 		for (int i = 0; i < data.length; i++) {
 			temp[i] = data[i];
 		}
+		// changes reference of data variable to the new temp array permanently
 		data = temp;
 	}
 
