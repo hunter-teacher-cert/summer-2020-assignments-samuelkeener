@@ -4,7 +4,7 @@ import java.util.*;
 public class LList {
 	private Node head;
 	private int length;
-	
+
 	public LList() {
 		head = null;
 	}
@@ -14,7 +14,7 @@ public class LList {
 		Node add = new Node(value);
 		add.setNext(head);
 		head = add;
-		length++;
+		length++; // adjusts length of list
 	}
 
 	// Returns true if list is empty, false otherwise
@@ -61,7 +61,25 @@ public class LList {
 			Node tmp2 = tmp.getNext(); // stores next Node in tmp variable
 			tmp.setNext(new Node(value, tmp2)); // creates new node after current index and sets its next value to tmp2
 		}
-		length++;
+		length++; // adjusts length of list
+	}
+
+	// Inserts given Node at index, pushes remaining forward
+	public void insert(Node node, int index) {
+		if (index == 0)
+			addFront(node.getData()); // adds Node to front if index is 0
+		else {
+			Node tmp = head;
+			for (int i = 0; i < index - 1; i++) { // stops just before index so it can push the value at the given index
+													// forward
+				tmp = tmp.getNext();
+				if (tmp == null) // ends method if index invalid
+					return;
+			}
+			node.setNext(tmp.getNext()); // attaches node to Node at target index
+			tmp.setNext(node); // attaches tmp to node
+		}
+		length++; // adjusts length of list
 	}
 
 	// Finds index of key in List
@@ -90,10 +108,10 @@ public class LList {
 			Node tmp2 = tmp.getNext(); // creates reference to Node AFTER target index
 			tmp.setNext(tmp2.getNext()); // sets next of Node before target to the node AFTER target, thus removing
 		}
-		length--;
+		length--; // adjusts length of list
 	}
 
-	//returns length value
+	// returns length value
 	public int length() {
 		if (head == null)
 			return 0;
