@@ -3,7 +3,8 @@ import java.util.*;
 
 public class LList {
 	private Node head;
-
+	private int length;
+	
 	public LList() {
 		head = null;
 	}
@@ -13,6 +14,7 @@ public class LList {
 		Node add = new Node(value);
 		add.setNext(head);
 		head = add;
+		length++;
 	}
 
 	// Returns true if list is empty, false otherwise
@@ -59,6 +61,7 @@ public class LList {
 			Node tmp2 = tmp.getNext(); // stores next Node in tmp variable
 			tmp.setNext(new Node(value, tmp2)); // creates new node after current index and sets its next value to tmp2
 		}
+		length++;
 	}
 
 	// Finds index of key in List
@@ -86,6 +89,21 @@ public class LList {
 			}
 			Node tmp2 = tmp.getNext(); // creates reference to Node AFTER target index
 			tmp.setNext(tmp2.getNext()); // sets next of Node before target to the node AFTER target, thus removing
+		}
+		length--;
+	}
+
+	//returns length value
+	public int length() {
+		if (head == null)
+			return 0;
+		else {
+			Node tmp = head;
+			for (int i = 1;; i++) {
+				tmp = tmp.getNext();
+				if (tmp == null)
+					return i;
+			}
 		}
 	}
 
