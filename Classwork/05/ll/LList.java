@@ -13,7 +13,7 @@ public class LList {
 	// Add a new Node containing value to the front of the list
 	public void addFront(String value) {
 		if (value == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Can't create Node with null String");
 		}
 		Node add = new Node(value);
 		add.setNext(head);
@@ -24,7 +24,7 @@ public class LList {
 	// Add a new Node to the end of the list
 	public void add(String value) {
 		if (value == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Can't create Node with null String");
 		}
 		insert(new Node(value), length);
 	}
@@ -42,24 +42,28 @@ public class LList {
 		for (int i = 0; i < index; i++) {
 			tmp = tmp.getNext();
 			if (tmp == null) // returns null if index invalid
-				throw new IndexOutOfBoundsException();
+				throw new IndexOutOfBoundsException("This \"index\" doesn't exist.");
 		}
 		return tmp.getData();
 	}
 
 	// Sets value of Node at index to value
 	public void set(int index, String value) {
+		if (value == null)
+			throw new IllegalArgumentException("Can't create Node with null String");
 		Node tmp = head;
 		for (int i = 0; i < index; i++) {
 			tmp = tmp.getNext();
 			if (tmp == null) // does nothing if index is invalid
-				throw new IndexOutOfBoundsException();
+				throw new IndexOutOfBoundsException("This \"index\" doesn't exist.");
 		}
 		tmp.setData(value);
 	}
 
 	// Inserts Node with given value at index, pushes remaining forward
 	public void insert(int index, String value) {
+		if (value == null)
+			throw new IllegalArgumentException("Can't create Node with null String");
 		insert(new Node(value), index);
 		/*
 		 * if (index == 0) addFront(value); // adds Node to front if index is 0 else {
@@ -81,7 +85,7 @@ public class LList {
 													// forward
 				tmp = tmp.getNext();
 				if (tmp == null) // ends method if index invalid
-					throw new IndexOutOfBoundsException();
+					throw new IndexOutOfBoundsException("This \"index\" doesn't exist.");
 			}
 			if (tmp.getNext() == null) {
 				tmp.setNext(node);
@@ -109,6 +113,8 @@ public class LList {
 
 	// Removes the Node at index
 	public void remove(int index) {
+		if (length == 0)
+			throw new NoSuchElementException("Empty Linked List");
 		if (index == 0) { // removes first element by making the second element the new head
 			head = head.getNext();
 		} else {
@@ -116,12 +122,12 @@ public class LList {
 			for (int i = 0; i < index - 1; i++) { // loops up until just before given index
 				tmp = tmp.getNext();
 				if (tmp == null)
-					throw new NoSuchElementException();
+					throw new IndexOutOfBoundsException("This \"index\" doesn't exist.");
 			}
 
 			Node next = tmp.getNext(); // creates reference to Node AFTER target index
 			if (next == null)
-				throw new NoSuchElementException();
+				throw new IndexOutOfBoundsException("This \"index\" doesn't exist.");
 			tmp.setNext(next.getNext()); // sets next of Node before target to the node AFTER target, thus removing
 		}
 		length--; // adjusts length of list
