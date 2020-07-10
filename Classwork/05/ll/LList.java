@@ -77,9 +77,10 @@ public class LList {
 
 	// Inserts given Node at index, pushes remaining forward
 	public void insert(Node node, int index) {
-		if (index == 0)
-			addFront(node.getData()); // adds Node to front if index is 0
-		else {
+		if (index == 0) {
+			addFront(node.getData());
+			return; // adds Node to front if index is 0
+		} else {
 			Node tmp = head;
 			for (int i = 0; i < index - 1; i++) { // stops just before index so it can push the value at the given index
 													// forward
