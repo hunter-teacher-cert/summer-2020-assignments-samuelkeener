@@ -33,11 +33,13 @@ public class Boogle {
 	}// end linSearch()
 
 	// binSearch without recursion
-	public static int binSearch(ArrayList al, int target) {
+	public static int regularBinSearch(ArrayList al, int target) {
+		if (al.size() == 0)
+			return -1;
 		// sets the low and high values for the sake of finding midpoint
 		int low = 0;
 		int high = al.size();
-		while (high > low) { // as long as there's something in between
+		while (high >= low) { // as long as there's something in between
 			int index = (low + high) / 2; // sets index to the midpoint between high and low
 			int check = (int) al.get(index); // stores value at index
 			if (check == target) // if check is target, return the index
@@ -54,15 +56,17 @@ public class Boogle {
 	}
 
 	// return index of target, or -1 if not found
-	public static int binSearchRecursive(ArrayList al, int target) {
+	public static int binSearch(ArrayList al, int target) {
 		// call the recursive method with low value of 0 and high value of size()
-		return binSearchRecursive(al, target, 0, al.size());
+		if (al.size() == 0)
+			return -1;
+		return binSearch(al, target, 0, al.size());
 	}// end binSearch()
 
-	public static int binSearchRecursive(ArrayList al, int target, int low, int high) {
+	public static int binSearch(ArrayList al, int target, int low, int high) {
 		// base case, if we get to a point where there's nothing in between high and
 		// low, we must admit defeat and return -1
-		if (high <= low)
+		if (high < low)
 			return -1;
 		int index = (low + high) / 2; // sets index to the midpoint between high and low
 		int check = (int) al.get(index); // stores value at index
@@ -71,9 +75,9 @@ public class Boogle {
 		else if (check < target) // we were too low, eliminate everything below/including index and try again
 			// by calling the same method with modified parameters, we are narrowing the
 			// search and changing the midpoint/index
-			return binSearchRecursive(al, target, index + 1, high);
+			return binSearch(al, target, index + 1, high);
 		else // we were too high, eliminate everything above/including index and try again.
-			return binSearchRecursive(al, target, low, index - 1);
+			return binSearch(al, target, low, index - 1);
 	}
 
 	// return ArrayList of random ints on range [lo,lo+hi)
