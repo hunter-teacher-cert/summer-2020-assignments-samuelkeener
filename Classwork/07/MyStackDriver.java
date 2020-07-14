@@ -42,14 +42,15 @@ public class MyStackDriver {
 		System.out.println("5 + (3 + 2) == " + MyStack.parenCheck("5 + (3 + 2) == "));
 		System.out.println("5 + (3 + 2)) == " + MyStack.parenCheck("5 + (3 + 2)) == "));
 		System.out.println("5 +) (3 + 2)) == " + MyStack.parenCheck("5 +) (3 + 2)) == "));
+		System.out.println("5 + (3 + {2 - 5}) - [5+3]" + MyStack.parenCheck("5 + (3 + {2 - 5}) - [5+3]"));
+		System.out.println("5 + (3 + {2 (- 5})) - [5+3]" + MyStack.parenCheck("5 + (3 + {2 (- 5})) - [5+3]"));
+
 		System.out.println("\nTesting word palindrome:\n");
 		System.out.println(MyStack.isWordPalindrome("i am what am i"));
 		System.out.println(MyStack.isWordPalindrome("baby shark doo doo do do do do"));
 		System.out.println("\nTesting reverse words:");
-		System.out.println("baby shark doo doo do do do do reversed:\n"+MyStack.reverseWords("baby shark doo doo do do do do"));
-
-
-
+		System.out.println(
+				"baby shark doo doo do do do do reversed:\n" + MyStack.reverseWords("baby shark doo doo do do do do"));
 
 	}// end main
 }// end class
