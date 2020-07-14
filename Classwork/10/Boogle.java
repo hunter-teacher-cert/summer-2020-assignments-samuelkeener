@@ -33,7 +33,7 @@ public class Boogle {
 	}// end linSearch()
 
 	// binSearch without recursion
-	public static int regularBinSearch(ArrayList al, int target) {
+	public static int binSearchIterative(ArrayList al, int target) {
 		if (al.size() == 0)
 			return -1;
 		// sets the low and high values for the sake of finding midpoint
@@ -60,10 +60,11 @@ public class Boogle {
 		// call the recursive method with low value of 0 and high value of size()
 		if (al.size() == 0)
 			return -1;
-		return binSearch(al, target, 0, al.size());
+		return binSearchRecursive(al, target, 0, al.size() - 1);
+		// return binSearchIterative(al, target);
 	}// end binSearch()
 
-	public static int binSearch(ArrayList al, int target, int low, int high) {
+	public static int binSearchRecursive(ArrayList al, int target, int low, int high) {
 		// base case, if we get to a point where there's nothing in between high and
 		// low, we must admit defeat and return -1
 		if (high < low)
@@ -75,9 +76,9 @@ public class Boogle {
 		else if (check < target) // we were too low, eliminate everything below/including index and try again
 			// by calling the same method with modified parameters, we are narrowing the
 			// search and changing the midpoint/index
-			return binSearch(al, target, index + 1, high);
+			return binSearchRecursive(al, target, index + 1, high);
 		else // we were too high, eliminate everything above/including index and try again.
-			return binSearch(al, target, low, index - 1);
+			return binSearchRecursive(al, target, low, index - 1);
 	}
 
 	// return ArrayList of random ints on range [lo,lo+hi)
