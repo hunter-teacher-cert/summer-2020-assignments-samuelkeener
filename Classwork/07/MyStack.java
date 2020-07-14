@@ -137,7 +137,8 @@ public class MyStack {
 	}
 
 	public static boolean isWordPalindrome(String s) {
-		MyStack words = new MyStack();
+		//Leaving this horribly complex version for posterity...
+		/*MyStack words = new MyStack();
 		// creates MyStack of words Strings in proper order
 		while (s.length() > 0) {
 			boolean end = false;
@@ -169,7 +170,8 @@ public class MyStack {
 		}
 		// if we made it through the previous loop without returning false, all elements
 		// are equal
-		return true;
+		return true;*/
+		return s.equals(reverseWords(s));
 	}
 
 	public static String reverseWords(String s) {
