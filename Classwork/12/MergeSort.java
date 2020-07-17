@@ -5,15 +5,17 @@ public class MergeSort {
 	private static int level = 0;
 
 	public static void main(String[] args) {
-		ArrayList<Integer> slist2 = prestoArrayListo(20, 0, 200);
-		ArrayList<Integer> slist3 = prestoArrayListo(5, 0, 200);
-		ArrayList<Integer> slist4 = prestoArrayListo(50, 0, 200);
-		slist2 = mergeSortWithOutput(slist2);
-		slist3 = mergeSort(slist3);
-		slist4 = mergeSort(slist4);
-		System.out.println(slist2);
-		System.out.println(slist3);
-		System.out.println(slist4);
+		ArrayList<Integer> slist2 = prestoArrayListo(1000000, 0, 200);
+		// ArrayList<Integer> slist3 = prestoArrayListo(5, 0, 200);
+		// ArrayList<Integer> slist4 = prestoArrayListo(50, 0, 200);
+		long start = System.currentTimeMillis();
+		slist2 = mergeSort(slist2);
+		long elapsed = System.currentTimeMillis() - start;
+		// slist3 = mergeSort(slist3);
+		// slist4 = mergeSort(slist4);
+		System.out.println(elapsed);
+		// System.out.println(slist3);
+		// System.out.println(slist4);
 	} // end main
 
 	public static ArrayList<Integer> insertionSort(ArrayList<Integer> al) {
@@ -38,26 +40,32 @@ public class MergeSort {
 	// takes two *sorted* ArrayLists of Integers and merges them together into a
 	// sorted list
 	public static ArrayList<Integer> merge(ArrayList<Integer> al1, ArrayList<Integer> al2) {
-		// create new list to store sorted values
+		// create new list to store sorted values and index variables
 		ArrayList<Integer> merge = new ArrayList<Integer>();
+		int index1 = 0;
+		int index2 = 0;
 
 		// while there are elements in both lists, compare first element of each and add
 		// lower one to next available index of merge
-		while (al1.size() > 0 && al2.size() > 0) {
-			if ((int) al1.get(0) > (int) al2.get(0))
-				merge.add(al2.remove(0)); // remove returns the value, so will simultaneously remove from al2 and add to
-											// merge
-			else // this handles cases of elements being equal, too
-				merge.add(al1.remove(0));
+		while (al1.size() > index1 && al2.size() > index2) {
+			if ((int) al1.get(index1) < (int) al2.get(index2)) {
+				merge.add(al1.get(index1)); // adds from al1
+				index1++; // moves index in al1, index in al2 stays the same
+			} else { // this handles cases of elements being equal, too
+				merge.add(al2.get(index2)); // adds from al2
+				index2++; // moves index in al2, index in al1 stays the same
+			}
 		}
 
 		// once one of the lists is empty, add all remaining elements in other list to
 		// merge
-		while (al1.size() > 0) { //
-			merge.add(al1.remove(0));
+		while (al1.size() > index1) { // will skip if al1 is empty
+			merge.add(al1.get(index1));
+			index1++;
 		}
-		while (al2.size() > 0) {
-			merge.add(al2.remove(0));
+		while (al2.size() > index2) { // will skip if al2 is empty
+			merge.add(al2.get(index2));
+			index2++;
 		}
 
 		// return the sorted ArrayList
@@ -67,6 +75,10 @@ public class MergeSort {
 	// takes an Integer ArrayList and returns a sorted version of the ArrayList,
 	// while leaving original list untouched
 	public static ArrayList<Integer> mergeSort(ArrayList<Integer> al) {
+		// base case: once list is size 1, we no longer split it, just return it
+		if (al.size() == 1) {
+			return al;
+		}
 		// create two new empty lists
 		ArrayList<Integer> split1 = new ArrayList<Integer>();
 		ArrayList<Integer> split2 = new ArrayList<Integer>();
@@ -76,15 +88,10 @@ public class MergeSort {
 		split1 = slice(al, 0, mid);
 		split2 = slice(al, mid, al.size());
 
-		// if either list has more than 1 element, send it back to be split again
-		// if a list has exactly 1 element, it does not recur
-		// this method will keep recurring until both lists have 1 element
-		if (split1.size() > 1)
-			split1 = mergeSort(split1);
-		if (split2.size() > 1)
-			split2 = mergeSort(split2);
-
-		// by the time it reaches this statement, split1 and split2 are sorted
+		// Sort the two lists and merge them.
+		// How do we sort them? MERGESORT!
+		split1 = mergeSort(split1);
+		split2 = mergeSort(split2);
 		return merge(split1, split2);
 	} // mergeSort
 
@@ -115,27 +122,35 @@ public class MergeSort {
 	// sorted list. NOW WITH HELPFUL OUTPUT! FUN!
 	public static ArrayList<Integer> mergeWithOutput(ArrayList<Integer> al1, ArrayList<Integer> al2) {
 		System.out.println("Merging back up to Level " + level + ": " + al1 + " and " + al2);
-		// create new list to store sorted values
+		// create new list to store sorted values and index variables
 		ArrayList<Integer> merge = new ArrayList<Integer>();
+		int index1 = 0;
+		int index2 = 0;
+
 		// while there are elements in both lists, compare first element of each and add
 		// lower one to next available index of merge
-		while (al1.size() > 0 && al2.size() > 0) {
-			if ((int) al1.get(0) > (int) al2.get(0))
-				merge.add(al2.remove(0)); // remove returns the value, so will simultaneously remove from al2 and add to
-											// merge
-			else // this handles cases of elements being equal, too
-				merge.add(al1.remove(0));
-		}
-		// once one of the lists is empty, add all remaining elements in other list to
-		// merge
-		while (al1.size() > 0) { //
-			merge.add(al1.remove(0));
-		}
-		while (al2.size() > 0) {
-			merge.add(al2.remove(0));
+		while (al1.size() > index1 && al2.size() > index2) {
+			if ((int) al1.get(index1) < (int) al2.get(index2)) {
+				merge.add(al1.get(index1)); // adds from al1
+				index1++; // moves index in al1, index in al2 stays the same
+			} else { // this handles cases of elements being equal, too
+				merge.add(al2.get(index2)); // adds from al2
+				index2++; // moves index in al2, index in al1 stays the same
+			}
 		}
 
+		// once one of the lists is empty, add all remaining elements in other list to
+		// merge
+		while (al1.size() > index1) { // will skip if al1 is empty
+			merge.add(al1.get(index1));
+			index1++;
+		}
+		while (al2.size() > index2) { // will skip if al2 is empty
+			merge.add(al2.get(index2));
+			index2++;
+		}
 		System.out.println("Level " + level + ": " + merge);
+
 		// return the sorted Arraylist
 		return merge;
 	} // mergeWithOutput
