@@ -5,11 +5,11 @@ public class MergeSort {
 	private static int level = 0;
 
 	public static void main(String[] args) {
-		ArrayList<Integer> slist2 = prestoArrayListo(1000000, 0, 200);
+		ArrayList<Integer> slist2 = prestoArrayListo(20, 0, 200);
 		// ArrayList<Integer> slist3 = prestoArrayListo(5, 0, 200);
 		// ArrayList<Integer> slist4 = prestoArrayListo(50, 0, 200);
 		long start = System.currentTimeMillis();
-		slist2 = mergeSort(slist2);
+		slist2 = mergeSortWithOutput(slist2);
 		long elapsed = System.currentTimeMillis() - start;
 		// slist3 = mergeSort(slist3);
 		// slist4 = mergeSort(slist4);
@@ -88,10 +88,14 @@ public class MergeSort {
 		split1 = slice(al, 0, mid);
 		split2 = slice(al, mid, al.size());
 
-		// Sort the two lists and merge them.
-		// How do we sort them? MERGESORT!
+		// Sort the two lists.
 		split1 = mergeSort(split1);
 		split2 = mergeSort(split2);
+		/**
+		 * Think about it: by the time we get to this next line, split1 and split2 are
+		 * SORTED LISTS, no matter how large they are! How do we know? Because we
+		 * MERGESORTED them... duh!
+		 **/
 		return merge(split1, split2);
 	} // mergeSort
 
@@ -158,6 +162,9 @@ public class MergeSort {
 	// takes an int ArrayList and returns a sorted version of the Arraylist, while
 	// leaving original list untouched. NOW WITH HELPFUL OUTPUT! FUN!
 	public static ArrayList<Integer> mergeSortWithOutput(ArrayList<Integer> al) {
+		if (al.size() == 1) {
+			return al;
+		}
 		System.out.println("\nLevel " + level + ": " + al);
 		level++;
 		System.out.println("Splitting down to level " + level);
@@ -173,10 +180,8 @@ public class MergeSort {
 		// if either list has more than 1 element, send it back to be split again
 		// if a list has exactly 1 element, it does not recur
 		// this method will keep recurring until both lists have 1 element
-		if (split1.size() > 1)
-			split1 = mergeSortWithOutput(split1);
-		if (split2.size() > 1)
-			split2 = mergeSortWithOutput(split2);
+		split1 = mergeSortWithOutput(split1);
+		split2 = mergeSortWithOutput(split2);
 		// by the time it reaches this statement, split1 and split2 are sorted
 		level--;
 		return mergeWithOutput(split1, split2);
