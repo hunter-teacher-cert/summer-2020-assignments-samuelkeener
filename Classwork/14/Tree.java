@@ -94,6 +94,7 @@ public class Tree {
 
 	}
 
+	// returns the number of children a particular node has, used in delete method
 	private int numChildren(TreeNode node) {
 		int count = 0;
 		if (node.getRight() != null)
@@ -162,13 +163,14 @@ public class Tree {
 		System.out.println();
 	}
 
-	public int insert(int value) {
+	// inserts a new leaf (no children) on binary Tree or increments value node
+	public boolean insert(int value) {
 		TreeNode insert = new TreeNode(value);
 
 		// if the tree is empty, manually insert new node as root
 		if (root == null) {
 			root = insert;
-			return 0;
+			return true;
 		}
 
 		TreeNode front = root;
@@ -176,24 +178,24 @@ public class Tree {
 
 		while (front != null) {
 			int frontValue = front.getData();
-			if (frontValue == value) {
-				return frontValue;
-			} else if (frontValue < value) {
+			if (frontValue == value) { // this is where we'd increment it or something
+				return true;
+			} else if (frontValue < value) { // veer right
 				trailer = front;
 				front = front.getRight();
-			} else {
+			} else { // veer left
 				trailer = front;
 				front = front.getLeft();
 			}
 		}
-
+		// find out which way to put our new value
 		int trailerValue = trailer.getData();
 		if (value < trailerValue) {
 			trailer.setLeft(insert);
-			return value;
+			return true;
 		} else {
 			trailer.setRight(insert);
-			return value;
+			return true;
 		}
 	}
 }
